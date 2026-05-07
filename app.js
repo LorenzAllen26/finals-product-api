@@ -6,8 +6,8 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
 
-const userRoutes = require("./routes/userRoutes");
-const productRoutes = require("./routes/productRoutes");
+const userRoutes = require("./userRoutes");
+const productRoutes = require("./productRoutes");
 
 const app = express();
 
