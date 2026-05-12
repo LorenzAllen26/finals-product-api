@@ -5,13 +5,14 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cors = require("cors");
+const path = require("path");
 
 const userRoutes = require("./userRoutes");
 const productRoutes = require("./productRoutes");
 
 const app = express();
 
-app.use(helmet());
+app.use(helmet({ contentSecurityPolicy: false }));
 
 const limiter = rateLimit({
   max: 100,
@@ -31,8 +32,14 @@ app.use(hpp());
 
 app.use(cors());
 
+app.use(express.static(path.join(__dirname)));
+
 app.use("/api/v1/users", userRoutes);
 
 app.use("/api/v1/products", productRoutes);
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
 
 module.exports = app;
